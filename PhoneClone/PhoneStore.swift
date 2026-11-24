@@ -262,6 +262,19 @@ final class PhoneStore: ObservableObject {
             CallEntry(name: "兄", number: brother, label: "携帯電話", kind: .incoming, date: at(27, 20, 51), durationSec: 192),
             // 28日前
             CallEntry(name: "母", number: mother, label: "携帯電話", kind: .incoming, date: at(28, 19, 13), durationSec: 1124),
+            // めい：3〜4日おきに夜、長時間通話する相手（約5週間分）
+            CallEntry(name: "めい", number: "09072615384", label: "携帯電話", kind: .incoming, date: at(1, 21, 40), durationSec: 2189),
+            CallEntry(name: "めい", number: "09072615384", label: "携帯電話", kind: .outgoing, date: at(3, 20, 56), durationSec: 2955),
+            CallEntry(name: "めい", number: "09072615384", label: "携帯電話", kind: .incoming, date: at(6, 21, 15), durationSec: 2512),
+            CallEntry(name: "めい", number: "09072615384", label: "携帯電話", kind: .outgoing, date: at(10, 20, 49), durationSec: 2016),
+            CallEntry(name: "めい", number: "09072615384", label: "携帯電話", kind: .incoming, date: at(13, 21, 22), durationSec: 3483),
+            CallEntry(name: "めい", number: "09072615384", label: "携帯電話", kind: .outgoing, date: at(17, 20, 37), durationSec: 2668),
+            CallEntry(name: "めい", number: "09072615384", label: "携帯電話", kind: .incoming, date: at(20, 22, 3), durationSec: 2387),
+            CallEntry(name: "めい", number: "09072615384", label: "携帯電話", kind: .incoming, date: at(24, 21, 5), durationSec: 3079),
+            CallEntry(name: "めい", number: "09072615384", label: "携帯電話", kind: .outgoing, date: at(27, 20, 58), durationSec: 1734),
+            CallEntry(name: "めい", number: "09072615384", label: "携帯電話", kind: .incoming, date: at(31, 21, 30), durationSec: 3761),
+            CallEntry(name: "めい", number: "09072615384", label: "携帯電話", kind: .outgoing, date: at(34, 20, 45), durationSec: 2110),
+            CallEntry(name: "めい", number: "09072615384", label: "携帯電話", kind: .incoming, date: at(38, 21, 12), durationSec: 2843),
         ]
         favorites = [
             FavoriteContact(name: "母", number: mother, label: "携帯電話"),
