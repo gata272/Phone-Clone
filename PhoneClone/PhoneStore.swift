@@ -171,6 +171,23 @@ final class PhoneStore: ObservableObject {
         let brother = "08059273841"
         let grandma = "0358214963"
         entries = [
+            // 今日の夜：+42から始まる迷惑電話の集中着信（19:50〜20:57）
+            CallEntry(name: "", number: "+421905337812", label: "スロバキア", kind: .missed, date: at(0, 20, 57), durationSec: 0),
+            CallEntry(name: "", number: "+420556308912", label: "チェコ", kind: .missed, date: at(0, 20, 51), durationSec: 0),
+            CallEntry(name: "", number: "+420830219547", label: "チェコ", kind: .missed, date: at(0, 20, 44), durationSec: 0),
+            CallEntry(name: "", number: "+420274913556", label: "チェコ", kind: .incoming, date: at(0, 20, 38), durationSec: 2),
+            CallEntry(name: "", number: "+421907664351", label: "スロバキア", kind: .missed, date: at(0, 20, 31), durationSec: 0),
+            CallEntry(name: "", number: "+420495771026", label: "チェコ", kind: .missed, date: at(0, 20, 24), durationSec: 0),
+            CallEntry(name: "", number: "+420603882147", label: "チェコ", kind: .missed, date: at(0, 20, 19), durationSec: 0),
+            CallEntry(name: "", number: "+420518907234", label: "チェコ", kind: .missed, date: at(0, 20, 15), durationSec: 0),
+            CallEntry(name: "", number: "+421944120678", label: "スロバキア", kind: .missed, date: at(0, 20, 11), durationSec: 0),
+            CallEntry(name: "", number: "+420212665309", label: "チェコ", kind: .incoming, date: at(0, 20, 7), durationSec: 3),
+            CallEntry(name: "", number: "+4232365541", label: "リヒテンシュタイン", kind: .missed, date: at(0, 20, 4), durationSec: 0),
+            CallEntry(name: "", number: "+420274913556", label: "チェコ", kind: .missed, date: at(0, 20, 1), durationSec: 0),
+            CallEntry(name: "", number: "+420777204965", label: "チェコ", kind: .missed, date: at(0, 19, 58), durationSec: 0),
+            CallEntry(name: "", number: "+421905337812", label: "スロバキア", kind: .missed, date: at(0, 19, 55), durationSec: 0),
+            CallEntry(name: "", number: "+420603882147", label: "チェコ", kind: .missed, date: at(0, 19, 52), durationSec: 0),
+            CallEntry(name: "", number: "+420274913556", label: "チェコ", kind: .missed, date: at(0, 19, 50), durationSec: 0),
             // 今日
             CallEntry(name: "", number: "+18005550176", label: "アメリカ合衆国", kind: .missed, date: at(0, 6, 12), durationSec: 0),
             CallEntry(name: "母", number: mother, label: "携帯電話", kind: .outgoing, date: at(0, 9, 5), durationSec: 382),

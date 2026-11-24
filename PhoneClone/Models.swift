@@ -70,12 +70,27 @@ enum PhoneFormat {
     static func displayNumber(_ raw: String) -> String {
         let trimmed = raw.trimmingCharacters(in: .whitespaces)
         let digits = trimmed.filter { $0.isNumber }
-        // 北米番号（+1）は +1-XXX-XXX-XXXX 形式で表示
+        // 北米番号（+1）は純正と同じ +1(866) 165-1359 形式で表示
         if trimmed.hasPrefix("+1"), digits.count == 11 {
             let area = digits.dropFirst(1).prefix(3)
             let mid = digits.dropFirst(4).prefix(3)
             let last = digits.dropFirst(7)
-            return "+1-\(area)-\(mid)-\(last)"
+            return "+1(\(area)) \(mid)-\(last)"
+        }
+        // チェコ（+420）・スロバキア（+421）は3桁ずつ区切る
+        if (trimmed.hasPrefix("+420") || trimmed.hasPrefix("+421")), digits.count == 12 {
+            let cc = digits.prefix(3)
+            let a = digits.dropFirst(3).prefix(3)
+            let b = digits.dropFirst(6).prefix(3)
+            let c = digits.dropFirst(9)
+            return "+\(cc) \(a) \(b) \(c)"
+        }
+        // リヒテンシュタイン（+423）
+        if trimmed.hasPrefix("+423"), digits.count == 10 {
+            let a = digits.dropFirst(3).prefix(3)
+            let b = digits.dropFirst(6).prefix(2)
+            let c = digits.dropFirst(8)
+            return "+423 \(a) \(b) \(c)"
         }
         guard digits.count == trimmed.count else { return trimmed }
         if digits.count == 11 {
