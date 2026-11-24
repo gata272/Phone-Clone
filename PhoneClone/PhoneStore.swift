@@ -167,21 +167,94 @@ final class PhoneStore: ObservableObject {
             let base = cal.date(byAdding: .day, value: -daysAgo, to: Date()) ?? Date()
             return cal.date(bySettingHour: h, minute: m, second: 0, of: base) ?? base
         }
+        let mother = "09046821357"
+        let brother = "08059273841"
+        let grandma = "0358214963"
         entries = [
-            CallEntry(name: "田中 美咲", number: "09012345678", label: "携帯電話", kind: .incoming, date: at(0, 10, 24), durationSec: 192),
-            CallEntry(name: "佐藤 健", number: "08098765432", label: "携帯電話", kind: .missed, date: at(0, 8, 3), durationSec: 0),
-            CallEntry(name: "母", number: "09055550123", label: "携帯電話", kind: .outgoing, date: at(1, 21, 47), durationSec: 725),
-            CallEntry(name: "", number: "07033334444", label: "携帯電話", kind: .missed, date: at(1, 13, 15), durationSec: 0),
-            CallEntry(name: "株式会社サンプル", number: "0312345678", label: "勤務先", kind: .incoming, date: at(2, 15, 30), durationSec: 64),
-            CallEntry(name: "田中 美咲", number: "09012345678", label: "携帯電話", kind: .outgoing, date: at(3, 19, 2), durationSec: 41),
-            CallEntry(name: "鈴木 翔太", number: "09077778888", label: "携帯電話", kind: .incoming, date: at(4, 12, 40), durationSec: 358),
+            // 今日
+            CallEntry(name: "", number: "+18005550176", label: "アメリカ合衆国", kind: .missed, date: at(0, 6, 12), durationSec: 0),
+            CallEntry(name: "母", number: mother, label: "携帯電話", kind: .outgoing, date: at(0, 9, 5), durationSec: 382),
+            // 昨日
+            CallEntry(name: "", number: "+12025550147", label: "アメリカ合衆国", kind: .missed, date: at(1, 3, 41), durationSec: 0),
+            CallEntry(name: "", number: "+12025550147", label: "アメリカ合衆国", kind: .missed, date: at(1, 14, 22), durationSec: 0),
+            CallEntry(name: "", number: "+16465550189", label: "アメリカ合衆国", kind: .incoming, date: at(1, 16, 3), durationSec: 5),
+            CallEntry(name: "母", number: mother, label: "携帯電話", kind: .incoming, date: at(1, 20, 18), durationSec: 1181),
+            CallEntry(name: "祖母", number: grandma, label: "自宅", kind: .outgoing, date: at(1, 11, 30), durationSec: 271),
+            // 2日前
+            CallEntry(name: "", number: "+14155550132", label: "アメリカ合衆国", kind: .missed, date: at(2, 10, 54), durationSec: 0),
+            CallEntry(name: "", number: "+12425550165", label: "バハマ", kind: .missed, date: at(2, 23, 17), durationSec: 0),
+            CallEntry(name: "兄", number: brother, label: "携帯電話", kind: .incoming, date: at(2, 22, 8), durationSec: 679),
+            // 3日前
+            CallEntry(name: "母", number: mother, label: "携帯電話", kind: .missed, date: at(3, 18, 44), durationSec: 0),
+            CallEntry(name: "母", number: mother, label: "携帯電話", kind: .outgoing, date: at(3, 19, 2), durationSec: 1334),
+            CallEntry(name: "佐藤 健", number: "08098765432", label: "携帯電話", kind: .missed, date: at(3, 13, 29), durationSec: 0),
+            // 4日前
+            CallEntry(name: "", number: "+18885550143", label: "アメリカ合衆国", kind: .incoming, date: at(4, 9, 31), durationSec: 12),
+            CallEntry(name: "祖母", number: grandma, label: "自宅", kind: .incoming, date: at(4, 14, 5), durationSec: 832),
+            // 5日前
+            CallEntry(name: "母", number: mother, label: "携帯電話", kind: .incoming, date: at(5, 19, 52), durationSec: 898),
+            CallEntry(name: "ヤマト運輸", number: "08034912765", label: "携帯電話", kind: .missed, date: at(5, 12, 20), durationSec: 0),
+            CallEntry(name: "ヤマト運輸", number: "08034912765", label: "携帯電話", kind: .incoming, date: at(5, 18, 3), durationSec: 38),
+            // 6日前
+            CallEntry(name: "", number: "+18765550128", label: "ジャマイカ", kind: .missed, date: at(6, 2, 15), durationSec: 0),
+            CallEntry(name: "", number: "+12025550147", label: "アメリカ合衆国", kind: .missed, date: at(6, 15, 47), durationSec: 0),
+            CallEntry(name: "田中 美咲", number: "09012345678", label: "携帯電話", kind: .outgoing, date: at(6, 21, 36), durationSec: 97),
+            // 7日前
+            CallEntry(name: "兄", number: brother, label: "携帯電話", kind: .outgoing, date: at(7, 8, 14), durationSec: 43),
+            // 8日前
+            CallEntry(name: "母", number: mother, label: "携帯電話", kind: .outgoing, date: at(8, 20, 41), durationSec: 347),
+            // 9日前
+            CallEntry(name: "", number: "+16465550189", label: "アメリカ合衆国", kind: .missed, date: at(9, 11, 8), durationSec: 0),
+            CallEntry(name: "", number: "+16465550189", label: "アメリカ合衆国", kind: .missed, date: at(9, 11, 26), durationSec: 0),
+            CallEntry(name: "佐藤 健", number: "08098765432", label: "携帯電話", kind: .incoming, date: at(9, 17, 55), durationSec: 321),
+            // 10日前
+            CallEntry(name: "祖母", number: grandma, label: "自宅", kind: .incoming, date: at(10, 13, 19), durationSec: 1263),
+            // 11日前
+            CallEntry(name: "母", number: mother, label: "携帯電話", kind: .incoming, date: at(11, 19, 27), durationSec: 1886),
+            // 12日前
+            CallEntry(name: "兄", number: brother, label: "携帯電話", kind: .incoming, date: at(12, 23, 4), durationSec: 468),
+            CallEntry(name: "駅前歯科", number: "0364298710", label: "その他", kind: .incoming, date: at(12, 10, 12), durationSec: 72),
+            // 13日前
+            CallEntry(name: "", number: "+12025550147", label: "アメリカ合衆国", kind: .missed, date: at(13, 4, 52), durationSec: 0),
+            CallEntry(name: "", number: "+18005550176", label: "アメリカ合衆国", kind: .incoming, date: at(13, 15, 21), durationSec: 7),
+            // 14日前
+            CallEntry(name: "兄", number: brother, label: "携帯電話", kind: .missed, date: at(14, 21, 33), durationSec: 0),
+            // 15日前
+            CallEntry(name: "母", number: mother, label: "携帯電話", kind: .outgoing, date: at(15, 12, 48), durationSec: 513),
+            // 16日前
+            CallEntry(name: "田中 美咲", number: "09012345678", label: "携帯電話", kind: .incoming, date: at(16, 18, 9), durationSec: 524),
+            // 17日前
+            CallEntry(name: "母", number: mother, label: "携帯電話", kind: .missed, date: at(17, 16, 25), durationSec: 0),
+            // 18日前
+            CallEntry(name: "祖母", number: grandma, label: "自宅", kind: .outgoing, date: at(18, 10, 37), durationSec: 564),
+            // 19日前
+            CallEntry(name: "", number: "+14155550132", label: "アメリカ合衆国", kind: .missed, date: at(19, 13, 58), durationSec: 0),
+            // 20日前
+            CallEntry(name: "兄", number: brother, label: "携帯電話", kind: .outgoing, date: at(20, 19, 44), durationSec: 65),
+            // 21日前
+            CallEntry(name: "母", number: mother, label: "携帯電話", kind: .incoming, date: at(21, 20, 15), durationSec: 1510),
+            // 22日前
+            CallEntry(name: "佐藤 健", number: "08098765432", label: "携帯電話", kind: .outgoing, date: at(22, 22, 31), durationSec: 178),
+            // 24日前
+            CallEntry(name: "母", number: mother, label: "携帯電話", kind: .outgoing, date: at(24, 9, 26), durationSec: 725),
+            // 25日前
+            CallEntry(name: "祖母", number: grandma, label: "自宅", kind: .incoming, date: at(25, 15, 42), durationSec: 997),
+            // 26日前
+            CallEntry(name: "", number: "+12025550147", label: "アメリカ合衆国", kind: .missed, date: at(26, 12, 6), durationSec: 0),
+            // 27日前
+            CallEntry(name: "兄", number: brother, label: "携帯電話", kind: .incoming, date: at(27, 20, 51), durationSec: 192),
+            // 28日前
+            CallEntry(name: "母", number: mother, label: "携帯電話", kind: .incoming, date: at(28, 19, 13), durationSec: 1124),
         ]
         favorites = [
-            FavoriteContact(name: "母", number: "09055550123", label: "携帯電話"),
-            FavoriteContact(name: "田中 美咲", number: "09012345678", label: "携帯電話"),
+            FavoriteContact(name: "母", number: mother, label: "携帯電話"),
+            FavoriteContact(name: "兄", number: brother, label: "携帯電話"),
+            FavoriteContact(name: "祖母", number: grandma, label: "自宅"),
         ]
         voicemails = [
-            VoicemailEntry(name: "佐藤 健", number: "08098765432", date: at(0, 8, 3), durationSec: 24, isRead: false),
+            VoicemailEntry(name: "母", number: mother, date: at(1, 20, 19), durationSec: 42, isRead: false),
+            VoicemailEntry(name: "", number: "+12025550147", date: at(2, 3, 15), durationSec: 18, isRead: false),
+            VoicemailEntry(name: "佐藤 健", number: "08098765432", date: at(9, 17, 56), durationSec: 24, isRead: true),
         ]
     }
 }

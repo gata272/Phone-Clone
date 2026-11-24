@@ -70,6 +70,13 @@ enum PhoneFormat {
     static func displayNumber(_ raw: String) -> String {
         let trimmed = raw.trimmingCharacters(in: .whitespaces)
         let digits = trimmed.filter { $0.isNumber }
+        // 北米番号（+1）は +1-XXX-XXX-XXXX 形式で表示
+        if trimmed.hasPrefix("+1"), digits.count == 11 {
+            let area = digits.dropFirst(1).prefix(3)
+            let mid = digits.dropFirst(4).prefix(3)
+            let last = digits.dropFirst(7)
+            return "+1-\(area)-\(mid)-\(last)"
+        }
         guard digits.count == trimmed.count else { return trimmed }
         if digits.count == 11 {
             let a = digits.prefix(3)

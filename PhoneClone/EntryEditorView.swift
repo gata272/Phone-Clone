@@ -16,7 +16,13 @@ struct EntryEditorView: View {
     @State private var minutes: Int = 0
     @State private var seconds: Int = 0
 
-    private let labels = ["携帯電話", "自宅", "勤務先", "その他"]
+    private var labels: [String] {
+        var base = ["携帯電話", "自宅", "勤務先", "その他"]
+        if !base.contains(label) {
+            base.append(label)
+        }
+        return base
+    }
 
     var body: some View {
         NavigationStack {
