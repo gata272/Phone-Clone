@@ -74,9 +74,8 @@ struct CallDetailView: View {
                         .foregroundStyle(.secondary)
                 }
                 ForEach(entries) { entry in
-                    Button {
-                        editingEntry = entry
-                    } label: {
+                    // 裏コマンド：長押しで編集画面が開く（タップでは開かない）
+                    Group {
                         HStack(spacing: 10) {
                             Image(systemName: entry.kind == .outgoing ? "phone.arrow.up.right" : (entry.kind.isMissed ? "phone.down.fill" : "phone.fill"))
                                 .font(.system(size: 13))
@@ -99,7 +98,11 @@ struct CallDetailView: View {
                         }
                         .contentShape(Rectangle())
                     }
-                    .buttonStyle(.plain)
+                    .simultaneousGesture(
+                        LongPressGesture(minimumDuration: 1.2).onEnded { _ in
+                            editingEntry = entry
+                        }
+                    )
                 }
                 .onDelete { indexSet in
                     for i in indexSet {

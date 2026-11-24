@@ -27,6 +27,34 @@ struct EntryEditorView: View {
     var body: some View {
         NavigationStack {
             Form {
+                if !store.favorites.isEmpty {
+                    Section("お気に入りから選ぶ") {
+                        ForEach(store.favorites) { fav in
+                            Button {
+                                name = fav.name
+                                number = fav.number
+                                label = fav.label
+                            } label: {
+                                HStack {
+                                    VStack(alignment: .leading, spacing: 2) {
+                                        Text(fav.name.isEmpty ? PhoneFormat.displayNumber(fav.number) : fav.name)
+                                            .foregroundStyle(.primary)
+                                        Text("\(fav.label) \(PhoneFormat.displayNumber(fav.number))")
+                                            .font(.caption)
+                                            .foregroundStyle(.secondary)
+                                    }
+                                    Spacer()
+                                    if number == fav.number {
+                                        Image(systemName: "checkmark")
+                                            .foregroundStyle(Color.blue)
+                                    }
+                                }
+                                .contentShape(Rectangle())
+                            }
+                            .buttonStyle(.plain)
+                        }
+                    }
+                }
                 Section("相手") {
                     TextField("名前（任意）", text: $name)
                     TextField("電話番号", text: $number)

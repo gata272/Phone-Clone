@@ -44,6 +44,12 @@ struct RecentsView: View {
                 .pickerStyle(.segmented)
                 .padding(.horizontal)
                 .padding(.vertical, 8)
+                // 裏コマンド：この切り替えを長押しすると履歴の追加画面が開く
+                .simultaneousGesture(
+                    LongPressGesture(minimumDuration: 1.2).onEnded { _ in
+                        showingEditor = true
+                    }
+                )
 
                 if groups.isEmpty {
                     Spacer()
@@ -68,13 +74,6 @@ struct RecentsView: View {
             .toolbar {
                 ToolbarItem(placement: .topBarLeading) {
                     EditButton()
-                }
-                ToolbarItem(placement: .topBarTrailing) {
-                    Button {
-                        showingEditor = true
-                    } label: {
-                        Image(systemName: "plus")
-                    }
                 }
             }
             .sheet(isPresented: $showingEditor) {

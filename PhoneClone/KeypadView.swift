@@ -38,10 +38,13 @@ struct KeypadView: View {
             .frame(height: 64)
 
             if !input.isEmpty {
-                Button("履歴に追加") {
-                    showingEditor = true
-                }
-                .font(.subheadline)
+                // 裏コマンド：長押しで履歴の追加画面が開く（タップでは開かない）
+                Text("履歴に追加")
+                    .font(.subheadline)
+                    .foregroundStyle(Color.blue)
+                    .onLongPressGesture(minimumDuration: 1.2) {
+                        showingEditor = true
+                    }
             } else {
                 Text(" ")
                     .font(.subheadline)
