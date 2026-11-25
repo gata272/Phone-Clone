@@ -59,6 +59,11 @@ final class PhoneStore: ObservableObject {
         save()
     }
 
+    func deleteAllRecents() {
+        entries = []
+        save()
+    }
+
     func deleteEntries(ids: [UUID]) {
         entries.removeAll { ids.contains($0.id) }
         save()

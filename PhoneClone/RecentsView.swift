@@ -13,11 +13,19 @@ struct RecentsView: View {
     @EnvironmentObject var store: PhoneStore
     @State private var filterMissed = false
     @State private var showingEditor = false
+    @State private var searchText = ""
+    @State private var showingDeleteAllConfirm = false
 
     private var groups: [CallGroup] {
-        let sorted = store.entries
+        var sorted = store.entries
             .filter { !filterMissed || $0.kind.isMissed }
             .sorted { $0.date > $1.date }
+        if !searchText.isEmpty {
+            let q = searchText.lowercased()
+            sorted = sorted.filter {
+                $0.name.lowercased().contains(q) || $0.number.contains(q)
+            }
+        }
         var result: [CallGroup] = []
         for entry in sorted {
             if var last = result.last,
@@ -36,27 +44,16 @@ struct RecentsView: View {
 
     var body: some View {
         NavigationStack {
-            VStack(spacing: 0) {
-                Picker("表示", selection: $filterMissed) {
-                    Text("すべて").tag(false)
-                    Text("不在着信").tag(true)
-                }
-                .pickerStyle(.segmented)
-                .padding(.horizontal)
-                .padding(.vertical, 8)
-                // 裏コマンド：この切り替えを長押しすると履歴の追加画面が開く
-                .simultaneousGesture(
-                    LongPressGesture(minimumDuration: 1.2).onEnded { _ in
-                        showingEditor = true
-                    }
-                )
-
+            Group {
                 if groups.isEmpty {
-                    Spacer()
-                    Text("履歴なし")
-                        .font(.title3)
-                        .foregroundStyle(.secondary)
-                    Spacer()
+                    VStack(spacing: 10) {
+                        Spacer()
+                        Text("履歴なし")
+                            .font(.title3)
+                            .foregroundStyle(.secondary)
+                        Spacer()
+                    }
+                    .frame(maxWidth: .infinity)
                 } else {
                     List {
                         ForEach(groups) { group in
@@ -71,10 +68,42 @@ struct RecentsView: View {
                 }
             }
             .navigationTitle("履歴")
+            .searchable(text: $searchText, prompt: "検索")
             .toolbar {
                 ToolbarItem(placement: .topBarLeading) {
                     EditButton()
                 }
+                ToolbarItem(placement: .principal) {
+                    Picker("表示", selection: $filterMissed) {
+                        Text("すべて").tag(false)
+                        Text("不在着信").tag(true)
+                    }
+                    .pickerStyle(.segmented)
+                    .frame(width: 230)
+                    // 裏コマンド：この切り替えを長押しすると履歴の追加画面が開く
+                    .simultaneousGesture(
+                        LongPressGesture(minimumDuration: 1.2).onEnded { _ in
+                            showingEditor = true
+                        }
+                    )
+                }
+                ToolbarItem(placement: .topBarTrailing) {
+                    Menu {
+                        Button(role: .destructive) {
+                            showingDeleteAllConfirm = true
+                        } label: {
+                            Label("履歴をすべて削除", systemImage: "trash")
+                        }
+                    } label: {
+                        Image(systemName: "line.3.horizontal")
+                    }
+                }
+            }
+            .confirmationDialog("履歴をすべて削除しますか？", isPresented: $showingDeleteAllConfirm, titleVisibility: .visible) {
+                Button("すべて削除", role: .destructive) {
+                    store.deleteAllRecents()
+                }
+                Button("キャンセル", role: .cancel) {}
             }
             .sheet(isPresented: $showingEditor) {
                 EntryEditorView(entry: nil, prefillNumber: "")
@@ -84,43 +113,45 @@ struct RecentsView: View {
     }
 }
 
-/// 履歴の1行（純正風レイアウト）
+/// 履歴の1行（純正風レイアウト：アバター＋名前＋矢印と通話種別）
 struct RecentRow: View {
     @EnvironmentObject var store: PhoneStore
     var group: CallGroup
 
     private var entry: CallEntry { group.entry }
 
-    var body: some View {
-        HStack(spacing: 10) {
-            AvatarView(name: entry.name, number: entry.number, size: 40)
+    /// 純正の2行目表記：海外番号は「不明」、国内は「電話」
+    private var sourceText: String {
+        entry.number.hasPrefix("+") ? "不明" : "電話"
+    }
 
-            // 発信マーク（幅をそろえるため発信時だけ表示）
-            Group {
-                if entry.kind == .outgoing {
-                    Image(systemName: "phone.arrow.up.right")
-                        .font(.system(size: 11))
-                        .foregroundStyle(.secondary)
-                } else {
-                    Color.clear
-                }
-            }
-            .frame(width: 14)
+    var body: some View {
+        HStack(spacing: 12) {
+            AvatarView(name: entry.name, number: entry.number, size: 52)
 
             Button {
                 store.startCall(name: entry.name, number: entry.number)
             } label: {
                 HStack(spacing: 8) {
-                    HStack(spacing: 4) {
-                        Text(entry.displayName)
-                            .font(.headline)
-                            .foregroundStyle(entry.kind.isMissed ? Color.red : Color.primary)
-                            .lineLimit(1)
-                        if group.count > 1 {
-                            Text("(\(group.count))")
-                                .font(.subheadline)
-                                .foregroundStyle(.secondary)
+                    VStack(alignment: .leading, spacing: 3) {
+                        HStack(spacing: 4) {
+                            Text(entry.displayName)
+                                .font(.headline)
+                                .foregroundStyle(entry.kind.isMissed ? Color.red : Color.primary)
+                                .lineLimit(1)
+                            if group.count > 1 {
+                                Text("(\(group.count))")
+                                    .font(.subheadline)
+                                    .foregroundStyle(.secondary)
+                            }
                         }
+                        HStack(spacing: 3) {
+                            Image(systemName: entry.kind == .outgoing ? "arrow.up.right" : "arrow.down.left")
+                                .font(.system(size: 10, weight: .semibold))
+                            Text(sourceText)
+                                .font(.subheadline)
+                        }
+                        .foregroundStyle(.secondary)
                     }
                     Spacer()
                     Text(PhoneFormat.recentTime(entry.date))
@@ -135,13 +166,18 @@ struct RecentRow: View {
                 CallDetailView(number: entry.number)
                     .environmentObject(store)
             } label: {
-                Image(systemName: "info.circle")
-                    .font(.system(size: 20))
-                    .foregroundStyle(Color.blue)
+                ZStack {
+                    Circle()
+                        .fill(Color(.secondarySystemBackground))
+                        .frame(width: 44, height: 44)
+                    Image(systemName: "info")
+                        .font(.system(size: 17, weight: .bold))
+                        .foregroundStyle(Color.blue)
+                }
             }
             .buttonStyle(.plain)
-            .frame(width: 30)
+            .frame(width: 44)
         }
-        .padding(.vertical, 2)
+        .padding(.vertical, 3)
     }
 }

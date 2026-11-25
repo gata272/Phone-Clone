@@ -7,7 +7,7 @@ struct ContentView: View {
         TabView {
             FavoritesView()
                 .tabItem {
-                    Label("お気に入り", systemImage: "star.fill")
+                    Label("よく使う項目", systemImage: "star.fill")
                 }
 
             RecentsView()

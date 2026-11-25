@@ -1,46 +1,31 @@
 import SwiftUI
 
-/// 名前から色とイニシャルを決める、連絡先アバター風の丸アイコン
+/// 純正風の連絡先アバター（ダークグレーの丸に頭文字、未登録は人物シルエット）
 struct AvatarView: View {
     var name: String
     var number: String
     var size: CGFloat = 46
-
-    private static let palette: [Color] = [
-        Color(red: 0.98, green: 0.45, blue: 0.35),
-        Color(red: 0.98, green: 0.65, blue: 0.25),
-        Color(red: 0.35, green: 0.78, blue: 0.45),
-        Color(red: 0.25, green: 0.65, blue: 0.95),
-        Color(red: 0.60, green: 0.45, blue: 0.95),
-        Color(red: 0.95, green: 0.45, blue: 0.65),
-        Color(red: 0.30, green: 0.75, blue: 0.75),
-        Color(red: 0.55, green: 0.55, blue: 0.60),
-    ]
-
-    private var initial: String {
-        let source = name.isEmpty ? number : name
-        return String(source.prefix(1))
-    }
-
-    private var color: Color {
-        let source = name.isEmpty ? number : name
-        let sum = source.unicodeScalars.reduce(0) { $0 + Int($1.value) }
-        return Self.palette[abs(sum) % Self.palette.count]
-    }
 
     var body: some View {
         ZStack {
             Circle()
                 .fill(
                     LinearGradient(
-                        colors: [color, color.opacity(0.72)],
+                        colors: [Color(red: 0.40, green: 0.41, blue: 0.47),
+                                 Color(red: 0.23, green: 0.24, blue: 0.29)],
                         startPoint: .top,
                         endPoint: .bottom
                     )
                 )
-            Text(initial)
-                .font(.system(size: size * 0.44, weight: .semibold))
-                .foregroundStyle(.white)
+            if name.isEmpty {
+                Image(systemName: "person.fill")
+                    .font(.system(size: size * 0.52))
+                    .foregroundStyle(.white)
+            } else {
+                Text(String(name.prefix(1)))
+                    .font(.system(size: size * 0.44, weight: .semibold))
+                    .foregroundStyle(.white)
+            }
         }
         .frame(width: size, height: size)
     }

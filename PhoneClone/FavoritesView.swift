@@ -65,7 +65,7 @@ struct FavoritesView: View {
                     .listStyle(.plain)
                 }
             }
-            .navigationTitle("お気に入り")
+            .navigationTitle("よく使う項目")
             .toolbar {
                 ToolbarItem(placement: .topBarLeading) {
                     EditButton()
