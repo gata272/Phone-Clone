@@ -58,6 +58,7 @@ struct RecentsView: View {
                     List {
                         ForEach(groups) { group in
                             RecentRow(group: group)
+                                .listRowInsets(EdgeInsets(top: 16, leading: 16, bottom: 16, trailing: 16))
                         }
                         .onDelete { indexSet in
                             let ids = indexSet.flatMap { groups[$0].ids }
@@ -127,29 +128,22 @@ struct RecentRow: View {
 
     var body: some View {
         HStack(spacing: 12) {
-            AvatarView(name: entry.name, number: entry.number, size: 52)
+            AvatarView(name: entry.name, number: entry.number, size: 40)
 
             Button {
                 store.startCall(name: entry.name, number: entry.number)
             } label: {
                 HStack(spacing: 8) {
-                    VStack(alignment: .leading, spacing: 3) {
-                        HStack(spacing: 4) {
-                            Text(entry.displayName)
-                                .font(.headline)
-                                .foregroundStyle(entry.kind.isMissed ? Color.red : Color.primary)
-                                .lineLimit(1)
-                            if group.count > 1 {
-                                Text("(\(group.count))")
-                                    .font(.subheadline)
-                                    .foregroundStyle(.secondary)
-                            }
-                        }
+                    VStack(alignment: .leading, spacing: 2) {
+                        Text(entry.displayName)
+                            .font(.headline)
+                            .foregroundStyle(entry.kind.isMissed ? Color.red : Color.primary)
+                            .lineLimit(1)
                         HStack(spacing: 3) {
                             Image(systemName: entry.kind == .outgoing ? "arrow.up.right" : "arrow.down.left")
-                                .font(.system(size: 10, weight: .semibold))
-                            Text(sourceText)
-                                .font(.subheadline)
+                                .font(.system(size: 9, weight: .semibold))
+                            Text(group.count > 1 ? "\(sourceText) (\(group.count))" : sourceText)
+                                .font(.footnote)
                         }
                         .foregroundStyle(.secondary)
                     }
@@ -169,15 +163,14 @@ struct RecentRow: View {
                 ZStack {
                     Circle()
                         .fill(Color(.secondarySystemBackground))
-                        .frame(width: 44, height: 44)
+                        .frame(width: 40, height: 40)
                     Image(systemName: "info")
-                        .font(.system(size: 17, weight: .bold))
+                        .font(.system(size: 15, weight: .bold))
                         .foregroundStyle(Color.blue)
                 }
             }
             .buttonStyle(.plain)
-            .frame(width: 44)
+            .frame(width: 40)
         }
-        .padding(.vertical, 3)
     }
 }
