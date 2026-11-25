@@ -92,39 +92,35 @@ struct RecentRow: View {
     private var entry: CallEntry { group.entry }
 
     var body: some View {
-        HStack(spacing: 8) {
+        HStack(spacing: 10) {
+            AvatarView(name: entry.name, number: entry.number, size: 40)
+
             // 発信マーク（幅をそろえるため発信時だけ表示）
             Group {
                 if entry.kind == .outgoing {
                     Image(systemName: "phone.arrow.up.right")
-                        .font(.system(size: 13))
+                        .font(.system(size: 11))
                         .foregroundStyle(.secondary)
                 } else {
                     Color.clear
                 }
             }
-            .frame(width: 18)
+            .frame(width: 14)
 
             Button {
                 store.startCall(name: entry.name, number: entry.number)
             } label: {
                 HStack(spacing: 8) {
-                    VStack(alignment: .leading, spacing: 2) {
-                        HStack(spacing: 4) {
-                            Text(entry.displayName)
-                                .font(.headline)
-                                .foregroundStyle(entry.kind.isMissed ? Color.red : Color.primary)
-                                .lineLimit(1)
-                            if group.count > 1 {
-                                Text("(\(group.count))")
-                                    .font(.subheadline)
-                                    .foregroundStyle(.secondary)
-                            }
-                        }
-                        Text(entry.name.isEmpty ? entry.label : "\(entry.label) \(PhoneFormat.displayNumber(entry.number))")
-                            .font(.subheadline)
-                            .foregroundStyle(.secondary)
+                    HStack(spacing: 4) {
+                        Text(entry.displayName)
+                            .font(.headline)
+                            .foregroundStyle(entry.kind.isMissed ? Color.red : Color.primary)
                             .lineLimit(1)
+                        if group.count > 1 {
+                            Text("(\(group.count))")
+                                .font(.subheadline)
+                                .foregroundStyle(.secondary)
+                        }
                     }
                     Spacer()
                     Text(PhoneFormat.recentTime(entry.date))
