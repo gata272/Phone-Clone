@@ -69,6 +69,17 @@ final class PhoneStore: ObservableObject {
         save()
     }
 
+    /// その番号の履歴すべて（とお気に入り）に名前を設定する
+    func setName(forNumber number: String, name: String) {
+        for i in entries.indices where entries[i].number == number {
+            entries[i].name = name
+        }
+        for i in favorites.indices where favorites[i].number == number {
+            favorites[i].name = name
+        }
+        save()
+    }
+
     func deleteAllEntries(number: String) {
         entries.removeAll { $0.number == number }
         save()

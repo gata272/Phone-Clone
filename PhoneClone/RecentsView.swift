@@ -15,6 +15,7 @@ struct RecentsView: View {
     @State private var showingEditor = false
     @State private var searchText = ""
     @State private var showingDeleteAllConfirm = false
+    @State private var detailNumber: String?
 
     private var groups: [CallGroup] {
         var sorted = store.entries
@@ -57,7 +58,7 @@ struct RecentsView: View {
                 } else {
                     List {
                         ForEach(groups) { group in
-                            RecentRow(group: group)
+                            RecentRow(group: group, onShowDetail: { detailNumber = $0 })
                                 .listRowInsets(EdgeInsets(top: 16, leading: 16, bottom: 16, trailing: 16))
                         }
                         .onDelete { indexSet in
@@ -110,6 +111,10 @@ struct RecentsView: View {
                 EntryEditorView(entry: nil, prefillNumber: "")
                     .environmentObject(store)
             }
+            .navigationDestination(item: $detailNumber) { number in
+                CallDetailView(number: number)
+                    .environmentObject(store)
+            }
         }
     }
 }
@@ -118,6 +123,7 @@ struct RecentsView: View {
 struct RecentRow: View {
     @EnvironmentObject var store: PhoneStore
     var group: CallGroup
+    var onShowDetail: (String) -> Void
 
     private var entry: CallEntry { group.entry }
 
@@ -156,21 +162,20 @@ struct RecentRow: View {
             }
             .buttonStyle(.plain)
 
-            NavigationLink {
-                CallDetailView(number: entry.number)
-                    .environmentObject(store)
+            Button {
+                onShowDetail(entry.number)
             } label: {
                 ZStack {
                     Circle()
                         .fill(Color(.secondarySystemBackground))
-                        .frame(width: 40, height: 40)
+                        .frame(width: 32, height: 32)
                     Image(systemName: "info")
-                        .font(.system(size: 15, weight: .bold))
+                        .font(.system(size: 12, weight: .bold))
                         .foregroundStyle(Color.blue)
                 }
             }
             .buttonStyle(.plain)
-            .frame(width: 40)
+            .frame(width: 32)
         }
     }
 }
